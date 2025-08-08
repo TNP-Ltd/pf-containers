@@ -11,19 +11,20 @@ env:
 jobs:
   push_container:
     strategy:
+      max-parallel: 2
       matrix:
         container:
           - httpd.dispatcher
           - netdata
     runs-on: ubuntu-latest
+    container:
+      image: quay.io/skopeo/stable:latest
     steps:
       - name: Skopeo Copy
-        uses: truemark/skopeo-copy-action@v1
-        with:
-          src-image: "docker://${{ env.REGISTRY }}/${{ env.SOURCE_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
-          dest-image: "docker://${{ env.REGISTRY }}/${{ env.DEST_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
-          src-username: "."  # Public registry
-          src-password: "."  # Public registry
-          dest-username: "${{ github.actor }}"
-          dest-password: "${{ secrets.GITHUB_TOKEN }}"
-          multi-arch: "all"
+        run: |
+          skopeo copy \
+            docker://${{ env.REGISTRY }}/${{ env.SOURCE_REPO }}/${{ matrix.container }}:${{ env.TAG }} \
+            docker://${{ env.REGISTRY }}/${{ env.DEST_REPO }}/${{ matrix.container }}:${{ env.TAG }} \
+            --src-no-creds \
+            --dest-username "${{ github.actor }}" \
+            --dest-password "${{ secrets.GITHUB_TOKEN }}"
