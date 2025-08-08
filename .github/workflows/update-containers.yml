@@ -15,7 +15,34 @@ jobs:
       matrix:
         container:
           - httpd.dispatcher
+          - httpd.admin_dispatcher
+          - pfldapexplorer
+          - pfconnector
+          - pfacct
+          - fingerbank-db
+          - pfcron
+          - radiusd-cli
+          - pfpki
+          - pfsso
+          - api-frontend
+          - pfsetacls
+          - radiusd-auth
+          - httpd.webservices
+          - pfperl-api
+          - httpd.aaa
+          - radiusd-eduroam
+          - radiusd-acct
+          - radiusd-load-balancer
+          - ntlm-auth-api
+          - proxysql
+          - haproxy-portal
+          - httpd.portal
+          - haproxy-admin
+          - pfcmd
+          - pfqueue
+          - pfconfig
           - netdata
+          - kafka
     runs-on: ubuntu-latest
     container:
       image: quay.io/skopeo/stable:latest
