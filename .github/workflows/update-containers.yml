@@ -20,8 +20,8 @@ jobs:
       - name: Skopeo Copy
         uses: truemark/skopeo-copy-action@v1
         with:
-          src-image: "${{ env.REGISTRY }}/${{ env.SOURCE_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
-          dest-image: "${{ env.REGISTRY }}/${{ env.DEST_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
+          src-image: "docker://${{ env.REGISTRY }}/${{ env.SOURCE_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
+          dest-image: "docker://${{ env.REGISTRY }}/${{ env.DEST_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
           src-username: "."  # Public registry
           src-password: "."  # Public registry
           dest-username: "${{ github.actor }}"
