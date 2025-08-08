@@ -5,7 +5,7 @@ on: workflow_dispatch
 env:
   REGISTRY: ghcr.io
   SOURCE_REPO: inverse-inc/packetfence
-  DEST_REPO: ${{ github.repository }}
+  DEST_REPO: tnp-ltd/pf-containers
   TAG: maintenance-14-1
 
 jobs:
