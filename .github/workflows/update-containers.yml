@@ -1,0 +1,29 @@
+name: Mirror PF containers
+
+on: workflow_dispatch
+
+env:
+  REGISTRY: ghcr.io
+  SOURCE_REPO: inverse-inc/packetfence
+  DEST_REPO: ${{ github.repository }}
+  TAG: maintenance-14-1
+
+jobs:
+  push_container:
+    strategy:
+      matrix:
+        container:
+          - httpd.dispatcher
+          - netdata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skopeo Copy
+        uses: truemark/skopeo-copy-action@v1
+        with:
+          src-image: "${{ env.REGISTRY }}/${{ env.SOURCE_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
+          dest-image: "${{ env.REGISTRY }}/${{ env.DEST_REPO }}/${{ matrix.container }}:${{ env.TAG }}"
+          src-username: "."  # Public registry
+          src-password: "."  # Public registry
+          dest-username: "${{ github.actor }}"
+          dest-password: "${{ secrets.GITHUB_TOKEN }}"
+          multi-arch: "all"
