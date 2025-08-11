@@ -43,6 +43,7 @@ jobs:
           - pfconfig
           - netdata
           - kafka
+          - pfdebian
     runs-on: ubuntu-latest
     container:
       image: quay.io/skopeo/stable:latest
